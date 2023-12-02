@@ -1,0 +1,5 @@
+{
+    "project_name": "Golang Simple API",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+    "author": "Jason Cheng"
+}
