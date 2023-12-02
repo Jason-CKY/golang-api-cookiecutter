@@ -11,6 +11,7 @@
 
 ## Features
 
+- [air](https://github.com/cosmtrek/air) for code reloading in dev environment
 - [echo](https://echo.labstack.com/) web server that serves html on htmx endpoints
 - [templ](https://templ.guide/) templates
 - [HTMX](https://htmx.org/) for interactivity, minimal js needed
