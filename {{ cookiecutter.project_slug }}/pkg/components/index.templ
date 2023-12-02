@@ -35,38 +35,24 @@ script sortableOnLoad() {
 
 }
 
+templ Headers() {
+	<head>
+		<title>{ { cookiecutter.project_name } }</title>
+		<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+		<link href="/static/output.css" rel="stylesheet"/>
+		<script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+		<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+		<meta name="htmx-config" content="{'includeIndicatorStyles': false}"/>
+	</head>
+}
+
 templ HomePage(numLoop int) {
 	<html id="webpage" data-theme="garden">
-		<head>
-			<title>To-do App</title>
-			<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
-			<link href="/static/output.css" rel="stylesheet"/>
-			<script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
-			<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-			<meta name="htmx-config" content="{&#34;includeIndicatorStyles&#34;: false}"/>
-		</head>
+		@Headers()
 		<body class="px-5 pt-2" onload={ sortableOnLoad() }>
-			<div class="flex items-center justify-between">
-				<article class="prose">
-					<h1 class="underline">My To-Do App</h1>
-				</article>
-				<div class="flex place-items-center">
-					🌞
-					<input
- 						id="theme-toggle"
- 						type="checkbox"
- 						class="toggle mx-1"
- 						data-toggle-theme="garden,dracula"
- 						data-act-class="pl-4"
-					/>
-					<script>
-						document.getElementById('theme-toggle').checked = localStorage.getItem('theme') === 'dracula';
-					</script>
-					🌚
-				</div>
-			</div>
+			@Navbar()
 			<div
  				hx-get="/htmx"
  				hx-trigger="load"
