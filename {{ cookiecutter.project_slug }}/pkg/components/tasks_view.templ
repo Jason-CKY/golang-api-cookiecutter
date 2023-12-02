@@ -1,0 +1,69 @@
+package components
+
+import (
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
+)
+
+templ TaskView(backlog_tasks []schemas.Task, progress_tasks []schemas.Task, done_tasks []schemas.Task) {
+	<div class="mt-5 flex w-full">
+		<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+			<div class="mx-2 flex flex-col">
+				<div class="flex items-center justify-between">
+					<article class="prose mb-5">
+						<h1>Backlog</h1>
+					</article>
+					<iconify-icon
+ 						class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90"
+ 						icon="icon-park-outline:add"
+ 						width="30"
+ 						height="30"
+ 						hx-post="/htmx/task/empty/backlog"
+ 						hx-target="#backlog-list"
+ 						hx-swap="afterbegin"
+					></iconify-icon>
+				</div>
+				@TaskList(backlog_tasks, "backlog")
+			</div>
+		</div>
+		<div class="divider divider-horizontal"></div>
+		<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+			<div class="mx-2 flex flex-col">
+				<div class="flex items-center justify-between">
+					<article class="prose mb-5">
+						<h1>In-Progress</h1>
+					</article>
+					<iconify-icon
+ 						class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90"
+ 						icon="icon-park-outline:add"
+ 						width="30"
+ 						height="30"
+ 						hx-post="/htmx/task/empty/progress"
+ 						hx-target="#progress-list"
+ 						hx-swap="afterbegin"
+					></iconify-icon>
+				</div>
+				@TaskList(progress_tasks, "progress")
+			</div>
+		</div>
+		<div class="divider divider-horizontal"></div>
+		<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+			<div class="mx-2 flex flex-col">
+				<div class="flex items-center justify-between">
+					<article class="prose mb-5">
+						<h1>Done</h1>
+					</article>
+					<iconify-icon
+ 						class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90"
+ 						icon="icon-park-outline:add"
+ 						width="30"
+ 						height="30"
+ 						hx-post="/htmx/task/empty/done"
+ 						hx-target="#done-list"
+ 						hx-swap="afterbegin"
+					></iconify-icon>
+				</div>
+				@TaskList(done_tasks, "done")
+			</div>
+		</div>
+	</div>
+}

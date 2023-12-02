@@ -1,0 +1,47 @@
+[
+  {
+    "description": "Research and plan a trip to Hawaii",
+    "status": "backlog",
+    "title": "Plan a vacation"
+  },
+  {
+    "description": "Start learning Spanish using online courses",
+    "status": "backlog",
+    "title": "Learn a new language"
+  },
+  {
+    "description": "Pick up 'To Kill a Mockingbird' by Harper Lee",
+    "status": "backlog",
+    "title": "Read a classic novel"
+  },
+  {
+    "description": "Submit all expense reports for the last quarter",
+    "status": "done",
+    "title": "Submit expense reports"
+  },
+  {
+    "description": "Finished painting the living room in light blue",
+    "status": "done",
+    "title": "Paint the living room"
+  },
+  {
+    "description": "Successfully completed the 'Introduction to Data Science' course",
+    "status": "done",
+    "title": "Complete online course"
+  },
+  {
+    "description": "Work on the quarterly report for the marketing department",
+    "status": "progress",
+    "title": "Complete project report"
+  },
+  {
+    "description": "Hit the gym for a cardio and strength training session",
+    "status": "progress",
+    "title": "Exercise at the gym"
+  },
+  {
+    "description": "Experiment with a new pasta recipe for dinner",
+    "status": "progress",
+    "title": "Cook a new recipe"
+  }
+]

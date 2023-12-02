@@ -1,0 +1,168 @@
+package components
+
+script sortableOnLoad() {
+	htmx.onLoad(function (content) {
+		var sortables = document.querySelectorAll(".sortable");
+		for (var i = 0; i < sortables.length; i++) {
+			var sortable = sortables[i];
+			var sortableInstance = new Sortable(sortable, {
+				handle: ".my-handle",
+				group: "shared",
+				animation: 150,
+				ghostClass: "blue-background-class",
+
+				// Make the `.htmx-indicator` unsortable
+				filter: ".htmx-indicator",
+				onMove: function (evt) {
+					return evt.related.className.indexOf("htmx-indicator") === -1;
+				},
+
+				// Disable sorting on the `end` event
+				onEnd: function (evt) {
+					if (evt.from !== evt.to) {
+					evt.to.dispatchEvent(evt);
+					}
+
+					this.option("disabled", true);
+				},
+			});
+			// Re-enable sorting on the `htmx:afterSwap` event
+			sortable.addEventListener("htmx:afterSwap", function () {
+				sortableInstance.option("disabled", false);
+			});
+		}
+	});
+
+}
+
+templ HomePage(numLoop int) {
+	<html id="webpage" data-theme="garden">
+		<head>
+			<title>To-do App</title>
+			<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+			<link href="/static/output.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+			<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+			<meta name="htmx-config" content="{&#34;includeIndicatorStyles&#34;: false}"/>
+		</head>
+		<body class="px-5 pt-2" onload={ sortableOnLoad() }>
+			<div class="flex items-center justify-between">
+				<article class="prose">
+					<h1 class="underline">My To-Do App</h1>
+				</article>
+				<div class="flex place-items-center">
+					🌞
+					<input
+ 						id="theme-toggle"
+ 						type="checkbox"
+ 						class="toggle mx-1"
+ 						data-toggle-theme="garden,dracula"
+ 						data-act-class="pl-4"
+					/>
+					<script>
+						document.getElementById('theme-toggle').checked = localStorage.getItem('theme') === 'dracula';
+					</script>
+					🌚
+				</div>
+			</div>
+			<div
+ 				hx-get="/htmx"
+ 				hx-trigger="load"
+ 				hx-swap="outerHTML"
+			>
+				<div
+ 					class="mt-5 flex w-full"
+				>
+					<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+						<div class="mx-2 flex flex-col">
+							<div class="flex items-center justify-between">
+								<article class="prose mb-5">
+									<h1>Backlog</h1>
+								</article>
+								<div class="rounded-sm bg-slate-700 h-8 w-8 animate-pulse"></div>
+							</div>
+							<div id="backlog-list" class="flex flex-col items-center">
+								for i:=0; i<numLoop; i++ {
+									<div
+ 										class="group card-compact relative my-2 w-[80%] place-self-center bg-base-100 shadow-xl animate-pulse"
+									>
+										<div class="card-body">
+											<article class="prose">
+												<div class="h-2 bg-slate-700 rounded w-1/2"></div>
+												<div class="pt-5">
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+												</div>
+											</article>
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+					<div class="divider divider-horizontal"></div>
+					<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+						<div class="mx-2 flex flex-col">
+							<div class="flex items-center justify-between">
+								<article class="prose mb-5">
+									<h1>In-Progress</h1>
+								</article>
+								<div class="rounded-sm bg-slate-700 h-8 w-8 animate-pulse"></div>
+							</div>
+							<div id="progress-list" class="flex flex-col items-center ">
+								for i:=0; i<numLoop; i++ {
+									<div
+ 										class="group card-compact relative my-2 w-[80%] place-self-center bg-base-100 shadow-xl animate-pulse"
+									>
+										<div class="card-body">
+											<article class="prose">
+												<div class="h-2 bg-slate-700 rounded w-1/2"></div>
+												<div class="pt-5">
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+												</div>
+											</article>
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+					<div class="divider divider-horizontal"></div>
+					<div class="card rounded-box grid w-[30%] bg-base-300 p-2">
+						<div class="mx-2 flex flex-col">
+							<div class="flex items-center justify-between">
+								<article class="prose mb-5">
+									<h1>Done</h1>
+								</article>
+								<div class="rounded-sm bg-slate-700 h-8 w-8 animate-pulse"></div>
+							</div>
+							<div id="done-list" class="flex flex-col items-center ">
+								for i:=0; i<numLoop; i++ {
+									<div
+ 										class="group card-compact relative my-2 w-[80%] place-self-center bg-base-100 shadow-xl animate-pulse"
+									>
+										<div class="card-body">
+											<article class="prose">
+												<div class="h-2 bg-slate-700 rounded w-1/2"></div>
+												<div class="pt-5">
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+													<div class="h-2 bg-slate-700 rounded w-full my-2"></div>
+												</div>
+											</article>
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+}

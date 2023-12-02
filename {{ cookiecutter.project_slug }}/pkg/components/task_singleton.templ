@@ -1,0 +1,50 @@
+package components
+
+import (
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
+	"fmt"
+)
+
+templ TaskSingleton(task schemas.Task) {
+	<div
+ 		id={ fmt.Sprintf("card-%v", task.Id) }
+ 		class="group card-compact relative my-2 w-[80%] place-self-center bg-base-100 shadow-xl"
+	>
+		<input type="hidden" name="task_ids" value={ task.Id }/>
+		<div class="card-body">
+			<div class="card-title justify-between mt-[0]">
+				<div class="flex place-items-center">
+					<iconify-icon icon="octicon:grabber-16" class="my-handle hidden group-hover:block hover:inline cursor-grab active:cursor-grabbing"></iconify-icon>
+					<iconify-icon
+ 						class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90 mx-2"
+ 						icon="iconamoon:edit-duotone"
+ 						hx-post={ fmt.Sprintf("/htmx/task/%v", task.Id) }
+ 						hx-target={ fmt.Sprintf("#card-%v", task.Id) }
+ 						hx-swap="outerHTML"
+					></iconify-icon>
+					<article class="prose">
+						if task.Status == "done" {
+							<h2 class="line-through overflow-auto">{ task.Title }</h2>
+						} else {
+							<h2 class="whitespace-normal overflow-auto">{ task.Title }</h2>
+						}
+					</article>
+				</div>
+				<iconify-icon
+ 					class="hidden cursor-pointer place-self-start hover:brightness-90 active:scale-[95%] active:brightness-90 group-hover:block"
+ 					icon="material-symbols:delete-outline"
+ 					hx-delete={ fmt.Sprintf("/htmx/task/%v", task.Id) }
+ 					hx-target={ fmt.Sprintf("#card-%v", task.Id) }
+ 					hx-swap="outerHTML"
+				></iconify-icon>
+			</div>
+			<article class="prose">
+				if task.Status == "done" {
+					<p class="line-through overflow-auto">{ task.Description }</p>
+				} else {
+					<p class="overflow-auto">{ task.Description }</p>
+				}
+			</article>
+		</div>
+	</div>
+}

@@ -1,0 +1,61 @@
+package components
+
+import (
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
+	"fmt"
+)
+
+templ EditTask(task schemas.Task) {
+	<div
+ 		id={ fmt.Sprintf("card-%v", task.Id) }
+ 		class="group card-compact relative my-2 w-[80%] place-self-center bg-base-100 shadow-xl"
+	>
+		<div class="card-body">
+			<form
+ 				hx-put={ fmt.Sprintf("/htmx/task/%v", task.Id) }
+ 				hx-target={ fmt.Sprintf("#card-%v", task.Id) }
+ 				hx-swap="outerHTML"
+			>
+				<select name="status" class="hidden">
+					<option selected>{ task.Status }</option>
+				</select>
+				<div class="card-title justify-between">
+					<input
+ 						class="w-3/4"
+ 						type="text"
+ 						name="title"
+ 						placeholder="Enter Task Title..."
+ 						value={ task.Title }
+ 						autofocus
+ 						required
+					/>
+					<div class="flex w-1/4 justify-end">
+						<iconify-icon
+ 							class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90"
+ 							hx-delete={ fmt.Sprintf("/htmx/task/cancel/%v", task.Id) }
+ 							hx-target={ fmt.Sprintf("#card-%v", task.Id) }
+ 							hx-swap="outerHTML"
+ 							style="color: red"
+ 							icon="iconoir:cancel"
+						></iconify-icon>
+						<button>
+							<iconify-icon
+ 								class="cursor-pointer hover:brightness-90 active:scale-[95%] active:brightness-90"
+ 								style="color: #4aed80"
+ 								icon="line-md:confirm"
+							></iconify-icon>
+						</button>
+					</div>
+				</div>
+				<input
+ 					class="w-[100%]"
+ 					type="text"
+ 					name="description"
+ 					placeholder="Enter Task Description..."
+ 					required
+ 					value={ task.Description }
+				/>
+			</form>
+		</div>
+	</div>
+}

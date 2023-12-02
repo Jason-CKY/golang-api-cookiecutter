@@ -1,0 +1,21 @@
+package components
+
+import (
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
+	"fmt"
+)
+
+templ TaskList(tasks []schemas.Task, status string) {
+	<form
+ 		id={ fmt.Sprintf("%v-list", status) }
+ 		class="sortable flex flex-col items-center"
+ 		hx-post={ fmt.Sprintf("/htmx/sort/%v", status) }
+ 		hx-trigger="end"
+ 		hx-target={ fmt.Sprintf("#%v-list", status) }
+ 		hx-swap="outerHTML"
+	>
+		for _, task := range tasks {
+			@TaskSingleton(task)
+		}
+	</form>
+}

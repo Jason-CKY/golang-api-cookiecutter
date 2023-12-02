@@ -1,0 +1,11 @@
+# https://github.com/cosmtrek/air/blob/master/air_example.toml
+
+[build]
+# Just plain old shell command. You could use `make` as well.
+cmd = "npx tailwindcss -i ./build/input.css -o ./static/output.css && templ generate && go build -o ./tmp/main ."
+# Watch these filename extensions.
+include_ext = ["go", "tpl", "tmpl", "html", "templ"]
+# Exclude specific regular expressions.
+exclude_regex = ["_templ\\.go"]
+# Ignore these filename extensions or directories.
+exclude_dir = ["assets", "tmp", "vendor", "node_modules", "scripts"]
