@@ -8,9 +8,10 @@ help:			## Help command
 .PHONY: install-deps
 install-deps:		## install all required dev dependencies
 	npm ci
-	go mod tidy
 	go install github.com/cosmtrek/air@latest
 	go install github.com/a-h/templ/cmd/templ@latest
+	templ generate
+	go mod tidy
 
 .PHONY: build-css
 build-css:		## use tailwind cli to build out output css
