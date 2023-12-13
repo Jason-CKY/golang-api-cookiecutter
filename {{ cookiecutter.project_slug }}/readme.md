@@ -23,6 +23,9 @@
 
 ## Quickstart (development mode)
 
+[Create github oauth application](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
+Run `cp .env.example .env`, and fill in the relevant information
+
 ```sh
 # Run install-deps once to install all dev dependencies, including air and templ
 make install-deps

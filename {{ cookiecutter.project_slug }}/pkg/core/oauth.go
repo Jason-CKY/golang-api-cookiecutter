@@ -1,77 +1,52 @@
 package core
 
-// func RequestAccessCode(authorizationCode string) (schemas.GitlabOauthResponse, *echo.HTTPError) {
-// 	endpoint := fmt.Sprintf("%v/oauth/token?client_id=%v&client_secret=%v&code=%v&grant_type=authorization_code&redirect_uri=%v",
-// 		GitlabHost,
-// 		GitlabClientId,
-// 		GitlabClientSecret,
-// 		authorizationCode,
-// 		RedirectUri)
-// 	req, httpErr := http.NewRequest(http.MethodPost, endpoint, nil)
-// 	req.Header.Set("Content-Type", "application/json")
-// 	if httpErr != nil {
-// 		log.Error(httpErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusBadRequest, httpErr.Error())
-// 	}
-// 	client := &http.Client{}
-// 	res, httpErr := client.Do(req)
-// 	if httpErr != nil {
-// 		log.Error(httpErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, httpErr.Error())
-// 	}
-// 	defer res.Body.Close()
-// 	body, _ := io.ReadAll(res.Body)
-// 	if res.StatusCode != 200 {
-// 		log.Error(string(body))
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(res.StatusCode, string(body))
-// 	}
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 
-// 	var oauthResponse schemas.GitlabOauthResponse
-// 	jsonErr := json.Unmarshal(body, &oauthResponse)
-// 	// error handling for json unmarshaling
-// 	if jsonErr != nil {
-// 		log.Error(jsonErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, jsonErr.Error())
-// 	}
+	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
+)
 
-// 	return oauthResponse, nil
-// }
+func RequestAccessCode(authorizationCode string) (schemas.GithubOauthResponse, *echo.HTTPError) {
+	endpoint := fmt.Sprintf("%v/login/oauth/access_token", GithubHost)
+	reqBody, _ := json.Marshal(map[string]string{
+		"client_id":     GithubClientID,
+		"client_secret": GithubClientSecret,
+		"code":          authorizationCode,
+	})
+	req, httpErr := http.NewRequest(http.MethodPost, endpoint, bytes.NewBuffer(reqBody))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	if httpErr != nil {
+		log.Error(httpErr.Error())
+		return schemas.GithubOauthResponse{}, echo.NewHTTPError(http.StatusBadRequest, httpErr.Error())
+	}
+	client := &http.Client{}
+	res, httpErr := client.Do(req)
+	if httpErr != nil {
+		log.Error(httpErr.Error())
+		return schemas.GithubOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, httpErr.Error())
+	}
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	if res.StatusCode != 200 {
+		log.Error(string(body))
+		return schemas.GithubOauthResponse{}, echo.NewHTTPError(res.StatusCode, string(body))
+	}
 
-// func RefreshAccessToken(refreshToken string) (schemas.GitlabOauthResponse, *echo.HTTPError) {
-// 	endpoint := fmt.Sprintf("%v/oauth/token?client_id=%v&client_secret=%v&refresh_token=%v&grant_type=refresh_token&redirect_uri=%v",
-// 		GitlabHost,
-// 		GitlabClientId,
-// 		GitlabClientSecret,
-// 		refreshToken,
-// 		RedirectUri)
-// 	req, httpErr := http.NewRequest(http.MethodPost, endpoint, nil)
-// 	req.Header.Set("Content-Type", "application/json")
-// 	if httpErr != nil {
-// 		log.Error(httpErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusBadRequest, httpErr.Error())
-// 	}
-// 	client := &http.Client{}
-// 	res, httpErr := client.Do(req)
-// 	if httpErr != nil {
-// 		log.Error(httpErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, httpErr.Error())
-// 	}
-// 	defer res.Body.Close()
-// 	body, _ := io.ReadAll(res.Body)
-// 	if res.StatusCode != 200 {
-// 		log.Error(string(body))
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(res.StatusCode, string(body))
-// 	}
+	var oauthResponse schemas.GithubOauthResponse
+	jsonErr := json.Unmarshal(body, &oauthResponse)
+	// error handling for json unmarshaling
+	if jsonErr != nil {
+		log.Error(string(body))
+		log.Error(jsonErr.Error())
+		return schemas.GithubOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, jsonErr.Error())
+	}
 
-// 	var oauthResponse schemas.GitlabOauthResponse
-// 	jsonErr := json.Unmarshal(body, &oauthResponse)
-// 	// error handling for json unmarshaling
-// 	if jsonErr != nil {
-// 		log.Error(jsonErr.Error())
-// 		return schemas.GitlabOauthResponse{}, echo.NewHTTPError(http.StatusInternalServerError, jsonErr.Error())
-// 	}
-
-// 	log.Debugf("Refreshed token. Response: %v", oauthResponse)
-
-// 	return oauthResponse, nil
-// }
+	return oauthResponse, nil
+}
