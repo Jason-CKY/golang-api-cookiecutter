@@ -2,19 +2,22 @@ package handlers
 
 import (
 	"context"
+	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
+	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/components"
+
+	{% if cookiecutter.use_oauth %}
 	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
-
-	"github.com/labstack/echo/v4"
-	log "github.com/sirupsen/logrus"
-	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/components"
 	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/core"
+	{% endif %}
 )
 
 // GET /
 func HomePage(c echo.Context) error {
+	{% if cookiecutter.use_oauth %}
 	_, err := core.GetOrRefreshToken(c)
 	if err != nil {
 		log.Error(err.Error())
@@ -29,8 +32,12 @@ func HomePage(c echo.Context) error {
 	}
 	component := components.HomePage(4)
 	return component.Render(context.Background(), c.Response().Writer)
+	{% else %}
+	component := components.HomePage(4)
+	return component.Render(context.Background(), c.Response().Writer)
+	{% endif %}
 }
-
+{% if cookiecutter.use_oauth %}
 // GET /login/github
 func LoginRedirect(c echo.Context) error {
 	// randomly generate this state, then store it in the browser cookies and verify the next token with cookie token
@@ -64,3 +71,4 @@ func OauthRedirectPage(c echo.Context) error {
 	})
 	return c.Redirect(http.StatusTemporaryRedirect, "/")
 }
+{% endif %}

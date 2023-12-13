@@ -22,8 +22,9 @@
 - [Directus](https://directus.io/) for headless CMS and API routes for CRUD operations
 
 ## Quickstart (development mode)
-
+{% if cookiecutter.use_oauth %}
 [Create github oauth application](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
+{% endif %}
 Run `cp .env.example .env`, and fill in the relevant information
 
 ```sh

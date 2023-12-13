@@ -160,7 +160,7 @@ templ HomePage(numLoop int) {
 		</body>
 	</html>
 }
-
+{% if cookiecutter.use_oauth %}
 templ LoginPage() {
 	<html id="webpage" data-theme="garden">
 		@Headers()
@@ -182,3 +182,4 @@ templ LoginPage() {
 		</body>
 	</html>
 }
+{% endif %}
