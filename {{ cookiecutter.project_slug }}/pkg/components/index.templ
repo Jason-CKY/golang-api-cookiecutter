@@ -1,5 +1,13 @@
 package components
 
+script Goto(url string) {
+	window.location.href=url;
+}
+
+script NewTab(url string) {
+	window.open(url);
+}
+
 script sortableOnLoad() {
 	htmx.onLoad(function (content) {
 		var sortables = document.querySelectorAll(".sortable");
@@ -145,6 +153,28 @@ templ HomePage(numLoop int) {
 									</div>
 								}
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+}
+
+templ LoginPage() {
+	<html id="webpage" data-theme="garden">
+		@Headers()
+		<body class="px-5 pt-2">
+			@Navbar()
+			<div class="w-full h-[50%] flex place-items-center justify-center">
+				<div class="card w-96 bg-base-300 shadow-xl">
+					<div class="card-body items-center text-center">
+						<h2 class="card-title">Welcome to {{ cookiecutter.project_name }}, login with</h2>
+						<div class="card-actions">
+							<button class="btn btn-neutral btn-wide" onClick={ Goto("/login/github") }>
+								<iconify-icon icon="mdi:github" width="32" height="32"></iconify-icon>
+								Github
+							</button>
 						</div>
 					</div>
 				</div>
