@@ -47,6 +47,7 @@ func main() {
 	{% if cookiecutter.use_oauth %}
 	e.GET("/login/github", handlers.LoginRedirect)
 	e.GET("/oauth/redirect", handlers.OauthRedirectPage)
+	e.GET("/logout", handlers.LogoutRedirect)
 	{% endif %}
 
 	e.GET("/htmx", handlers.TasksView)

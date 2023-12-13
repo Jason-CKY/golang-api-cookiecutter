@@ -1,5 +1,11 @@
 package components
 
+{% if cookiecutter.use_oauth %}
+import (
+	"github.com/google/go-github/v57/github"
+)
+{% endif %}
+
 script Goto(url string) {
 	window.location.href=url;
 }
@@ -56,11 +62,16 @@ templ Headers() {
 	</head>
 }
 
-templ HomePage(numLoop int) {
+templ HomePage(numLoop int
+{%- if cookiecutter.use_oauth -%}
+, user *github.User
+{%- endif -%}) {
 	<html id="webpage" data-theme="garden">
 		@Headers()
 		<body class="px-5 pt-2" onload={ sortableOnLoad() }>
-			@Navbar()
+			@Navbar({%- if cookiecutter.use_oauth -%}
+			user
+			{%- endif -%})
 			<div
  				hx-get="/htmx"
  				hx-trigger="load"
@@ -165,7 +176,7 @@ templ LoginPage() {
 	<html id="webpage" data-theme="garden">
 		@Headers()
 		<body class="px-5 pt-2">
-			@Navbar()
+			@Navbar(nil)
 			<div class="w-full h-[50%] flex place-items-center justify-center">
 				<div class="card w-96 bg-base-300 shadow-xl">
 					<div class="card-body items-center text-center">

@@ -12,32 +12,49 @@ import (
 	"strings"
 	log "github.com/sirupsen/logrus"
 	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/core"
+	"github.com/google/go-github/v57/github"
 	{% endif %}
 )
 
 // GET /
 func HomePage(c echo.Context) error {
 	{% if cookiecutter.use_oauth %}
-	_, err := core.GetOrRefreshToken(c)
+	githubAuthToken, err := core.GetOrRefreshToken(c)
 	if err != nil {
 		log.Error(err.Error())
-		// return to login page if access token and refresh token both invalid
+		// return to login page if access token invalid
 		component := components.LoginPage()
 		return component.Render(context.Background(), c.Response().Writer)
 	}
-	// show content
+
+	client := github.NewClient(nil).WithAuthToken(githubAuthToken)
+	authenticated_user, _, err := client.Users.Get(context.Background(), "")
 	if err != nil {
 		log.Error(err.Error())
-		return c.String(http.StatusInternalServerError, "Internal Server Error")
+		// return to login page if access token invalid
+		component := components.LoginPage()
+		return component.Render(context.Background(), c.Response().Writer)
 	}
-	component := components.HomePage(4)
+	component := components.HomePage(4, authenticated_user)
 	return component.Render(context.Background(), c.Response().Writer)
-	{% else %}
+	{% elif not cookiecutter.use_oauth %}
 	component := components.HomePage(4)
 	return component.Render(context.Background(), c.Response().Writer)
 	{% endif %}
 }
 {% if cookiecutter.use_oauth %}
+// GET /logout
+func LogoutRedirect(c echo.Context) error {
+	// Invalidate cookie
+	c.SetCookie(&http.Cookie{
+		Name:   core.AccessTokenCookie,
+		Path:   "/", // cookie will be sent to all paths in the same origin
+		MaxAge: -1,
+	})
+
+	return c.Redirect(http.StatusTemporaryRedirect, "/")
+}
+
 // GET /login/github
 func LoginRedirect(c echo.Context) error {
 	// randomly generate this state, then store it in the browser cookies and verify the next token with cookie token
