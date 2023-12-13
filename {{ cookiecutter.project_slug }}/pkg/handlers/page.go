@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 	"github.com/labstack/echo/v4"
-	log "github.com/sirupsen/logrus"
 	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/components"
 
 	{% if cookiecutter.use_oauth %}
@@ -11,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	log "github.com/sirupsen/logrus"
 	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/core"
 	{% endif %}
 )
