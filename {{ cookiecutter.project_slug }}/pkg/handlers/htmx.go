@@ -11,12 +11,6 @@ import (
 	"github.com/{{ cookiecutter.author }}/{{ cookiecutter.project_slug }}/pkg/schemas"
 )
 
-// GET /
-func HomePage(c echo.Context) error {
-	component := components.HomePage(4)
-	return component.Render(context.Background(), c.Response().Writer)
-}
-
 // GET /htmx
 func TasksView(c echo.Context) error {
 	backlogTaskList, progressTaskList, doneTaskList, echoHTTPErr := core.GetTasksInOrder()
