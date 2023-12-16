@@ -11,6 +11,7 @@
 
 ## Features
 
+- [swagger-ui](https://swagger.io/tools/swagger-ui/) for JSON api routes, declared with [swaggo/swag declarative comments format](https://github.com/swaggo/swag#declarative-comments-format)
 - [air](https://github.com/cosmtrek/air) for code reloading in dev environment
 - [echo](https://echo.labstack.com/) web server that serves html on htmx endpoints
 - [templ](https://templ.guide/) templates

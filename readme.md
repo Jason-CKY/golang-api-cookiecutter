@@ -4,6 +4,7 @@
 
 - [echo](https://echo.labstack.com/) web server for serving API endpoints
 - [templ](https://templ.guide/) for HTML templates
+- [swagger-ui](https://swagger.io/tools/swagger-ui/) for JSON api routes, declared with [swaggo/swag declarative comments format](https://github.com/swaggo/swag#declarative-comments-format)
 - [HTMX](https://htmx.org/) for interactivity, minimal js needed
 - [tailwind](https://tailwindcss.com/) for CSS Styling
 - [DaisyUI](daisyui.com/) with [theme-changing library](https://github.com/saadeghi/theme-change) for CSS styling and themes
