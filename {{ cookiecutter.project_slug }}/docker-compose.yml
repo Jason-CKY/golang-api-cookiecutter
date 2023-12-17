@@ -1,12 +1,12 @@
 version: "3.7"
 
 services:
-  htmx-server:
+  go-server:
     build:
       context: .
       dockerfile: ./build/Dockerfile
       target: production
-    container_name: htmx
+    container_name: go-server
     environment:
       DIRECTUS_HOST: http://directus:8055
       PORT: 8080

@@ -7,13 +7,13 @@ help:			## Help command
 
 .PHONY: install-deps
 install-deps:		## install all required dev dependencies
-	npm ci
 	go install github.com/cosmtrek/air@latest
 	go install github.com/a-h/templ/cmd/templ@latest
 	go install github.com/swaggo/swag/cmd/swag@latest
 	templ generate
 	go mod tidy
 	swag init --parseDependency
+	{% if cookiecutter.html_templating %}npm ci{% endif %}
 
 .PHONY: build-css
 build-css:		## use tailwind cli to build out output css

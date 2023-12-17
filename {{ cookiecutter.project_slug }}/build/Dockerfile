@@ -9,7 +9,8 @@ RUN wget https://go.dev/dl/go{{ cookiecutter.go_version }}.linux-amd64.tar.gz &&
 ENV PATH="${PATH}:/usr/local/go/bin:/root/go/bin"
 
 RUN go install github.com/a-h/templ/cmd/templ@latest &&\
-    go install github.com/cosmtrek/air@latest
+    go install github.com/cosmtrek/air@latest &&\
+    go install github.com/swaggo/swag/cmd/swag@latest
 
 ENTRYPOINT ["air"]
 

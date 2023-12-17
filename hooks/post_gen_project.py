@@ -2,6 +2,9 @@ import os
 import shutil
 
 REMOVE_PATHS = [
+    '{% if not cookiecutter.html_templating %} package.json {% endif %}',
+    '{% if not cookiecutter.html_templating %} package-lock.json {% endif %}',
+    '{% if not cookiecutter.html_templating %} tailwind.config.js {% endif %}',
     '{% if not cookiecutter.html_templating %} pkg/components {% endif %}',
     '{% if not cookiecutter.html_templating %} pkg/handlers/htmx.go {% endif %}',
     '{% if not cookiecutter.html_templating %} pkg/handlers/page.go {% endif %}',

@@ -14,18 +14,17 @@
 - [swagger-ui](https://swagger.io/tools/swagger-ui/) for JSON api routes, declared with [swaggo/swag declarative comments format](https://github.com/swaggo/swag#declarative-comments-format)
 - [air](https://github.com/cosmtrek/air) for code reloading in dev environment
 - [echo](https://echo.labstack.com/) web server that serves html on htmx endpoints
-- [templ](https://templ.guide/) templates
+- [Directus](https://directus.io/) for headless CMS and API routes for CRUD operations
+{% if cookiecutter.html_templating %}- [templ](https://templ.guide/) templates
 - [HTMX](https://htmx.org/) for interactivity, minimal js needed
 - Lazy loading with HTMX
 - [tailwind](https://tailwindcss.com/) for CSS Styling
 - [DaisyUI](daisyui.com/) with [theme-changing library](https://github.com/saadeghi/theme-change) for CSS styling and themes
-- [SortableJS](https://github.com/SortableJS/Sortable) for drag and drop of tasks (sorting and updates)
-- [Directus](https://directus.io/) for headless CMS and API routes for CRUD operations
+- [SortableJS](https://github.com/SortableJS/Sortable) for drag and drop of tasks (sorting and updates){% endif %}
 
 ## Quickstart (development mode)
-{% if cookiecutter.html_templating and cookiecutter.use_oauth %}
-[Create github oauth application](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
-{% endif %}
+
+{% if cookiecutter.html_templating and cookiecutter.use_oauth %}[Create github oauth application](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).{% endif %}
 Run `cp .env.example .env`, and fill in the relevant information
 
 ```sh
@@ -41,11 +40,8 @@ air
 
 There will be swagger documentation being served from `http://localhost:8080/swagger/index.html`.
 
-{% if cookiecutter.html_templating %}
-You can view the web app on `http://localhost:8080`.
+{% if cookiecutter.html_templating %}You can view the web app on `http://localhost:8080`.
 {% endif %}
-
-
 ## Format on save
 
 Add the following config into your vscode `settings.json` to enable format on save of a file in vscode:
