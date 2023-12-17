@@ -23,7 +23,7 @@
 - [Directus](https://directus.io/) for headless CMS and API routes for CRUD operations
 
 ## Quickstart (development mode)
-{% if cookiecutter.use_oauth %}
+{% if cookiecutter.html_templating and cookiecutter.use_oauth %}
 [Create github oauth application](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
 {% endif %}
 Run `cp .env.example .env`, and fill in the relevant information
@@ -38,6 +38,13 @@ make initialize-db
 # start golang server with code reloading using air
 air
 ```
+
+There will be swagger documentation being served from `http://localhost:8080/swagger/index.html`.
+
+{% if cookiecutter.html_templating %}
+You can view the web app on `http://localhost:8080`.
+{% endif %}
+
 
 ## Format on save
 

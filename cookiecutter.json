@@ -1,6 +1,7 @@
 {
     "project_name": "Golang Simple API",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "html_templating": [true, false],
     "use_oauth": [true, false],
     "author": "anonymous",
     "go_version": "1.21.3"

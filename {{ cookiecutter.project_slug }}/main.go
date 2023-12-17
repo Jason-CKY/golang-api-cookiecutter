@@ -55,13 +55,16 @@ func main() {
 	e := echo.New()
 	e.Static("/static", "static")
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	{% if cookiecutter.html_templating %}
 	e.GET("/", handlers.HomePage)
-	{% if cookiecutter.use_oauth %}
+	{% endif %}
+	{% if cookiecutter.html_templating and cookiecutter.use_oauth %}
 	e.GET("/login/github", handlers.LoginRedirect)
 	e.GET("/oauth/redirect", handlers.OauthRedirectPage)
 	e.GET("/logout", handlers.LogoutRedirect)
 	{% endif %}
 
+	{% if cookiecutter.html_templating %}
 	// HTML routes
 	e.GET("/htmx", handlers.TasksView)
 	e.POST("/htmx/task/empty/:status", handlers.EmptyEditTaskView)
@@ -70,6 +73,7 @@ func main() {
 	e.PUT("/htmx/task/:id", handlers.UpdateTaskView)
 	e.DELETE("/htmx/task/cancel/:id", handlers.CancelEditTaskView)
 	e.POST("/htmx/sort/:status", handlers.SortTaskView)
+	{% endif %}
 
 	// JSON API routes
 	e.GET("/api/v1/tasks", handlers.GetAllTasks)
