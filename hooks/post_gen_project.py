@@ -10,8 +10,8 @@ REMOVE_PATHS = [
     '{% if not cookiecutter.html_templating %} pkg/handlers/page.go {% endif %}',
     '{% if not cookiecutter.html_templating %} pkg/schemas/api.go {% endif %}',
     '{% if not cookiecutter.html_templating or not cookiecutter.use_oauth %} pkg/schemas/oauth.go {% endif %}',
-    '{% if not cookiecutter.html_templating or cookiecutter.use_oauth %} pkg/core/cookie.go {% endif %}',
-    '{% if not cookiecutter.html_templating or cookiecutter.use_oauth %} pkg/core/oauth.go {% endif %}',
+    '{% if not cookiecutter.html_templating or not cookiecutter.use_oauth %} pkg/core/cookie.go {% endif %}',
+    '{% if not cookiecutter.html_templating or not cookiecutter.use_oauth %} pkg/core/oauth.go {% endif %}',
 ]
 
 for path in REMOVE_PATHS:
